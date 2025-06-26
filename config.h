@@ -90,6 +90,10 @@ static const Key keys[] = {
 	{ 0,                       	XF86XK_AudioRaiseVolume, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
 	{ 0,                       	XF86XK_AudioMute,        spawn, SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
 
+	/* volume controls via pactl for normal keyboard (fkeys) */
+	{ 0,                  	        XK_F9, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
+	{ 0,                       	XK_F10, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
+	{ 0,                       	XK_F8, spawn, SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
 
 	/* brightness controls */
 	{ 0,                       	XF86XK_MonBrightnessUp,   spawn, SHCMD("brightnessctl set +10%") },
