@@ -43,6 +43,10 @@
 
 #include "drw.h"
 #include "util.h"
+#include <unistd.h>
+
+extern char *argv0;
+extern char **argv;
 
 /* macros */
 #define BUTTONMASK              (ButtonPressMask|ButtonReleaseMask)
@@ -1648,8 +1652,6 @@ spawn(const Arg *arg)
 {
 	struct sigaction sa;
 
-	if (arg->v == dmenucmd)
-		dmenumon[0] = '0' + selmon->num;
 	if (fork() == 0) {
 		if (dpy)
 			close(ConnectionNumber(dpy));
@@ -2139,6 +2141,8 @@ zoom(const Arg *arg)
 	pop(c);
 }
 
+static void sigusr1(int unused);
+
 int
 main(int argc, char *argv[])
 {
@@ -2150,6 +2154,7 @@ main(int argc, char *argv[])
 		fputs("warning: no locale support\n", stderr);
 	if (!(dpy = XOpenDisplay(NULL)))
 		die("dwm: cannot open display");
+	signal(SIGUSR1, sigusr1);
 	checkotherwm();
 	setup();
 #ifdef __OpenBSD__
@@ -2162,3 +2167,11 @@ main(int argc, char *argv[])
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;
 }
+
+static void
+sigusr1(int unused)
+{
+    char *const argv[] = {"/proc/self/exe", NULL};
+    execv(argv[0], argv);
+}
+
