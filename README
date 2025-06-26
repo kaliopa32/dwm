@@ -1,5 +1,10 @@
 This is my personal build of dwm for cloning and deployment. Original source: https://git.suckless.org/dwm/
 
+this build requires pywal16 to compile, including a pywal colorscheme initialized, along with an xresources merge script in .xinitrc
+
+otherwise this build will not compile / look right / function right
+
+
 
 
 
